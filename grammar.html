@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>E-Script Grammar Definition</title>
+    <style>
+        body { font-family: 'Consolas', monospace; background: #1e1e1e; color: #d4d4d4; padding: 20px; }
+        .grammar { background: #252526; padding: 20px; border-radius: 8px; }
+        .rule { margin: 10px 0; padding: 10px; background: #2d2d30; border-left: 3px solid #007acc; }
+        .rule-id { color: #4ec9b0; font-weight: bold; }
+        .alt { color: #ce9178; margin-left: 20px; }
+        .ref { color: #9cdcfe; }
+      .literal { color: #ce9178; }
+    </style>
+</head>
+<body>
+    <div class="grammar">
+        <h1>E-Script EBNF Grammar</h1>
+      
+    <div class="rule">
+          <span class="rule-id">program</span> ::= 
+    <div class="alt"><span class="ref">statement</span>*</div>
+        </div>
+        
+        <div class="rule">
+     <span class="rule-id">statement</span> ::= 
+       <div class="alt"><span class="ref">operation</span> <span class="literal">"#"</span></div>
+     <div class="alt">| <span class="ref">comment</span></div>
+ </div>
+   
+      <div class="rule">
+    <span class="rule-id">operation</span> ::= 
+      <div class="alt"><span class="literal">"modify"</span> <span class="ref">identifier</span> <span class="ref">expression</span></div>
+            <div class="alt">| <span class="literal">"adjust"</span> <span class="ref">identifier</span> <span class="ref">expression</span></div>
+            <div class="alt">| <span class="literal">"bypass"</span> <span class="ref">identifier</span></div>
+            <div class="alt">| <span class="literal">"delete"</span> <span class="ref">identifier</span></div>
+      <div class="alt">| <span class="literal">"process"</span> <span class="ref">action</span> <span class="ref">expression</span>?</div>
+            <div class="alt">| <span class="literal">"create"</span> <span class="ref">identifier</span> <span class="ref">expression</span>?</div>
+    <div class="alt">| <span class="literal">"deploy"</span> <span class="ref">identifier</span> <span class="ref">expression</span>?</div>
+       <div class="alt">| <span class="literal">"lane"</span> <span class="ref">identifier</span> <span class="ref">operation</span></div>
+ <div class="alt">| <span class="literal">"sync"</span> <span class="ref">identifier</span>?</div>
+</div>
+      
+        <div class="rule">
+       <span class="rule-id">expression</span> ::= 
+   <div class="alt"><span class="ref">literal</span></div>
+            <div class="alt">| <span class="ref">identifier</span></div>
+         <div class="alt">| <span class="ref">expression</span> <span class="literal">"+"</span> <span class="ref">expression</span></div>
+            <div class="alt">| <span class="ref">expression</span> <span class="literal">"-"</span> <span class="ref">expression</span></div>
+   <div class="alt">| <span class="literal">"("</span> <span class="ref">expression</span> <span class="literal">")"</span></div>
+        </div>
+  
+        <div class="rule">
+            <span class="rule-id">identifier</span> ::= 
+            <div class="alt">[A-Za-z_][A-Za-z0-9_]*</div>
+        </div>
+        
+        <div class="rule">
+            <span class="rule-id">literal</span> ::= 
+  <div class="alt"><span class="ref">string</span> | <span class="ref">number</span></div>
+      </div>
+        
+        <div class="rule">
+     <span class="rule-id">string</span> ::= 
+     <div class="alt"><span class="literal">'"'</span> [^"]* <span class="literal">'"'</span></div>
+        </div>
+        
+        <div class="rule">
+     <span class="rule-id">number</span> ::= 
+            <div class="alt">[0-9]+ (<span class="literal">"."</span> [0-9]+)?</div>
+        </div>
+        
+        <div class="rule">
+            <span class="rule-id">action</span> ::= 
+    <div class="alt"><span class="literal">"read"</span> | <span class="literal">"write"</span> | <span class="literal">"ping"</span> | <span class="literal">"sync"</span> | <span class="literal">"analyze"</span> | <span class="literal">"create"</span></div>
+        </div>
+    
+        <div class="rule">
+            <span class="rule-id">comment</span> ::= 
+         <div class="alt"><span class="literal">"*"</span> [^\n]* <span class="literal">"\n"</span></div>
+            <div class="alt">| <span class="literal">"**"</span> .* <span class="literal">"**"</span></div>
+        </div>
+    </div>
+</body>
+</html>
